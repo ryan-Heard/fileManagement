@@ -1,38 +1,53 @@
 import os
+import shutil
+from os import path
+
 
 def get_downloads():
     #/A /B C:\Users\%USERNAME%\Downloads
-    command = "cd %HOMEPATH%/Downloads && dir /A /B"
-    results = os.popen(command).read().strip();
+    #command = "cd %HOMEPATH%/Downloads && dir /A /B"
+    #results = os.popen(command).read().strip();
+    os.chdir(path.expanduser('~')+"\Downloads")
+    results = os.listdir()
 
-    for line in results.split('\n'):
-        if '.exe' in line:
+    img_types = ['jpeg','gif','img','jpg','png']
+    readable_types = ['pdf','doc','rtf','docx']
+    compressed_file_types = ['tar','zip','.msi','iso']
+    sound_types = ['mp4']
+    installer_types = ['exe']
+
+    for line in results:
+
+        ext = line.split('.')
+        ext = ext[1]
+
+        if ext in installer_types:
             move_files(line, 'Desktop/Installers')
-        elif '.pdf' in line or '.doc' in line or '.rtf' in line:
+        elif ext in readable_types:
             move_files(line, 'Documents')
-        elif '.jpeg' in line or '.gif' in line or '.img' in line or '.jpg' in line:
+        elif ext in img_types:
             move_files(line,'Pictures')
-        elif '.mp4' in line:
+        elif ext in sound_types:
             move_files(line,'Videos')
-        elif '.tar' in line or '.zip' in line or '.msi' in line or '.iso' in line:
+        elif ext in compressed_file_types:
             move_files(line,"Setups")
-
-
 
 def move_files(item, target):
     target = target.strip()
-    directory = os.popen('cd %HOMEPATH% && cd').read().strip()
-    directory += '/'
+    os.chdir(path.expanduser('~'))
 
-    if os.path.exists(directory+target):
+    if os.path.exists(target):
         pass
-    elif os.path.exists(directory+'Desktop/'+target):
+    elif os.path.exists('Desktop/'+target):
         target = 'Desktop/'+target
-    elif not os.path.exists(directory+target):
-        os.popen('cd %HOMEPATH%/Desktop && md '+target)
-        target = 'Desktop/'+target
+    elif not os.path.exists(target):
+        os.chdir('Desktop')
+        os.mkdir(target)
 
+    #shutil.move(path.realpath(item), path.expanduser('~')+'\\'+target)
+    #print("Moved: {} to {}".format(item,target))
     command = 'cd %HOMEPATH%/Downloads && move "'+item.strip()+'" %HOMEPATH%/'+target
     results = os.popen(command).read()
+    print(results)
 
 get_downloads();
