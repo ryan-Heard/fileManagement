@@ -4,9 +4,6 @@ from os import path
 
 
 def get_downloads():
-    #/A /B C:\Users\%USERNAME%\Downloads
-    #command = "cd %HOMEPATH%/Downloads && dir /A /B"
-    #results = os.popen(command).read().strip();
     os.chdir(path.expanduser('~')+"\Downloads")
     results = os.listdir()
 
@@ -17,20 +14,22 @@ def get_downloads():
     installer_types = ['exe']
 
     for line in results:
+        os.chdir(path.expanduser('~')+"\Downloads")
+        location = path.realpath(line)
 
         ext = line.split('.')
         ext = ext[1]
 
         if ext in installer_types:
-            move_files(line, 'Desktop/Installers')
+            move_files(location, 'Desktop/Installers')
         elif ext in readable_types:
-            move_files(line, 'Documents')
+            move_files(location, 'Documents')
         elif ext in img_types:
-            move_files(line,'Pictures')
+            move_files(location,'Pictures')
         elif ext in sound_types:
-            move_files(line,'Videos')
+            move_files(location,'Videos')
         elif ext in compressed_file_types:
-            move_files(line,"Setups")
+            move_files(location,"Setups")
 
 def move_files(item, target):
     target = target.strip()
@@ -44,10 +43,7 @@ def move_files(item, target):
         os.chdir('Desktop')
         os.mkdir(target)
 
-    #shutil.move(path.realpath(item), path.expanduser('~')+'\\'+target)
-    #print("Moved: {} to {}".format(item,target))
-    command = 'cd %HOMEPATH%/Downloads && move "'+item.strip()+'" %HOMEPATH%/'+target
-    results = os.popen(command).read()
-    print(results)
+    shutil.move(item, path.expanduser('~')+'\\'+target)
+    print("Moved: {} to {}".format(item,target))
 
 get_downloads();
