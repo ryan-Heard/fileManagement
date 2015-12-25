@@ -16,9 +16,10 @@ def get_downloads():
     for line in results:
         os.chdir(path.expanduser('~')+"\Downloads")
         location = path.realpath(line)
-
         ext = line.split('.')
-        ext = ext[1]
+
+        if len(ext) > 1:
+            ext = ext[1]
 
         if ext in installer_types:
             move_files(location, 'Desktop/Installers')
