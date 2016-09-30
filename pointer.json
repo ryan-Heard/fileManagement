@@ -1,0 +1,27 @@
+{
+  "img_types": [
+    "jpeg",
+    "gif",
+    "img",
+    "jpg",
+    "png"
+  ],
+  "readable_types": [
+    "pdf",
+    "doc",
+    "rtf",
+    "docx"
+  ],
+  "sound_types": [
+    "mp4"
+  ],
+  "compressed_file_types": [
+    "tar",
+    "zip",
+    ".msi",
+    "iso"
+  ],
+  "installer_types": [
+    "exe"
+  ]
+}

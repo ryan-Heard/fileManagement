@@ -7,9 +7,11 @@ def get_downloads():
     os.chdir(path.expanduser('~')+"\Downloads")
     results = os.listdir()
 
-    img_types = ['jpeg','gif','img','jpg','png']
-    readable_types = ['pdf','doc','rtf','docx']
-    compressed_file_types = ['tar','zip','.msi','iso']
+    img_types = ['jpeg', 'gif', 'img', 'jpg', ' png']
+    readable_types = ['pdf', 'doc', 'rtf',
+                      'docx', 'xls', 'csv',
+                      'json', '.log']
+    compressed_file_types = ['tar', 'zip', '.msi', 'iso']
     sound_types = ['mp4']
     installer_types = ['exe']
 
@@ -26,11 +28,12 @@ def get_downloads():
         elif ext in readable_types:
             move_files(location, 'Documents')
         elif ext in img_types:
-            move_files(location,'Pictures')
+            move_files(location, 'Pictures')
         elif ext in sound_types:
-            move_files(location,'Videos')
+            move_files(location, 'Videos')
         elif ext in compressed_file_types:
-            move_files(location,"Setups")
+            move_files(location, 'Setups')
+
 
 def move_files(item, target):
     target = target.strip()
@@ -45,6 +48,7 @@ def move_files(item, target):
         os.mkdir(target)
 
     shutil.move(item, path.expanduser('~')+'\\'+target)
-    print("Moved: {} to {}".format(item,target))
+    print("Moved: {} to {}".format(item, target))
 
-get_downloads();
+
+get_downloads()
