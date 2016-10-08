@@ -1,6 +1,12 @@
 import os
 import shutil
 from os import path
+import json
+
+files_types = {}
+
+with open('pointer.json') as pointer:
+    files_types = json.load(pointer)
 
 
 def get_downloads():
@@ -56,15 +62,15 @@ def switch_board(ext, line):
     if len(ext) > 1:
         ext = ext[1]
 
-    if ext in installer_types:
+    if ext in files_types['installer_types']:
         move_files(location, 'Installers')
-    elif ext in readable_types:
+    elif ext in files_types['readable_types']:
         move_files(location, 'Documents')
-    elif ext in img_types:
+    elif ext in files_types['img_types']:
         move_files(location, 'Pictures')
-    elif ext in sound_types:
+    elif ext in files_types['sound_types']:
         move_files(location, 'Videos')
-    elif ext in compressed_file_types:
+    elif ext in files_types['compressed_file_types']:
         move_files(location, 'Setups')
 
 

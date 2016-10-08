@@ -7,10 +7,9 @@
     "png"
   ],
   "readable_types": [
-    "pdf",
-    "doc",
-    "rtf",
-    "docx"
+    "pdf", "doc", "rtf",
+    "docx", "xls", "csv",
+    "json", ".log"
   ],
   "sound_types": [
     "mp4"
